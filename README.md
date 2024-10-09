@@ -52,7 +52,7 @@ A computer, CF card reader, Philips head screwdriver  and the CFImage.img file
 - Lift up the metal casing and remove the metal shield
 - Remove the CF card 
 - Insert CF car into CF Reader
-- Use a image for flashing the CFImage.img file to the CF card
+- Use a image flashing tool for flashing the CFImage.img file to the CF card
 - Eject it
 - Put it back into the MSN TV 2
 - Reassemble the MSN TV 2
