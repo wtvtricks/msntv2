@@ -1,9 +1,6 @@
 import serve
-import logging
-import requests
 import os
 import thread
-import config
 import time
 
 
