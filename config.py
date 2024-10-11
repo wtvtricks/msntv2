@@ -6,6 +6,7 @@ server_ip = ''
 home_port = 7070
 headwaiter_port = 6060
 sg_port = 80
+upstream_dns = '1.0.0.1'
 
 # Automatically get the server IP if specified
 if ip.lower() == "automatic":

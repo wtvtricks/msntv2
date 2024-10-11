@@ -1,0 +1,20 @@
+<script>
+  var tvShell = new ActiveXObject("MSNTV.TVShell");
+  function fetchClock() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://sg4.trusted.msntv.msn.com/clock", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        tvShell.DeviceControl.SetClock(xhr.responseText);
+      } else if (xhr.readyState === 4) {
+        tvShell.DeviceControl.SetClock(0, 0, 0, 0, 0, 0);
+      }
+    };
+    xhr.send();
+  }
+
+  window.onload = function () {
+    fetchClock();
+    setInterval(fetchClock, 59000);
+  };
+</script>

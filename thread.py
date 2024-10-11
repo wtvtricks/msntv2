@@ -15,7 +15,6 @@ def run_service():
 def run_dns_server():
     resolver = dns.RedirectResolver()
     server = dns.DNSServer(resolver, port=53, address=config.server_ip, tcp=False)
-    print("Starting DNS server...")
     server.start()
 
 def run():
@@ -28,7 +27,10 @@ def run():
     bootstrap_thread.start()
     service_thread.start()
     dns_thread.start()
-
+    print("Started Home service")
+    print("Started Bootstrap service")
+    print("Started SG service")
+    print("Started DNS service")
     home_thread.join()
     bootstrap_thread.join()
     service_thread.join()

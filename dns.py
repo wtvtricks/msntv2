@@ -4,7 +4,6 @@ from dnslib.server import DNSServer, DNSHandler, BaseResolver
 import socket
 import logging
 
-# Define the redirects
 REDIRECTS = {
     'headwaiter.trusted.msntv.msn.com.': {'ip': config.server_ip, 'port': config.headwaiter_port},
     'sg4.trusted.msntv.msn.com.': {'ip': config.server_ip, 'port': config.sg_port},
@@ -51,7 +50,27 @@ class RedirectResolver(BaseResolver):
                 reply.header.rcode = 3  # NXDOMAIN
                 return reply
         else:
-            logger.warning(f"Query for unknown domain: {qname}")
+            # If the domain is not in the redirects, forward the request to 1.0.0.1
+            logger.info(f"Query for unknown domain: {qname}. Forwarding the request to 1.0.0.1.")
+            return self.forward_request(request)
+
+    def forward_request(self, request):
+        try:
+            query = DNSRecord.question(str(request.q.qname), QTYPE.A)
+            response = query.send(config.upstream_dns, 53)  # UDP port 53
+            reply = DNSRecord.parse(response)
+            reply.header.id = request.header.id
+            reply.header.rcode = 0
+            for answer in reply.rr:
+                if isinstance(answer.rdata, A):
+                    continue 
+                else:
+                    logger.warning(f"Unexpected record type for {reply.q.qname}: {answer.rdata}")
+
+            return reply
+
+        except Exception as e:
+            logger.error(f"Error forwarding request for {request.q.qname}: {e}")
             reply = request.reply()
             reply.header.rcode = 3  # NXDOMAIN
             return reply

@@ -10,5 +10,5 @@ if __name__ == '__main__':
 
     if not os.path.exists(serve.images_shared_directory):
         os.makedirs(serve.images_shared_directory)
-    time.sleep(3)
+    time.sleep(1.5)
     thread.run()
