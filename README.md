@@ -34,7 +34,8 @@ A computer with the MSN TV 2 server running
 
 - Run the main.py in the root folder 
 -  Go to Settings > Change Connection Settings > Change broadband settings
-- Change the Preferred and Alternate DNS server to your local ip
+- Change the Preferred DNS Server local ip
+- Set the Alternate DNS Server to 1.0.0.1
 - Click save changes and go back to the login screen
 - Now click connect
 
