@@ -4,10 +4,7 @@ from dnslib.server import DNSServer, DNSHandler, BaseResolver
 import socket
 import logging
 
-<<<<<<< HEAD
 # Define the redirects
-=======
->>>>>>> c8c84c961c226e654e23c3b86c7fe714c39c4d62
 REDIRECTS = {
     'headwaiter.trusted.msntv.msn.com.': {'ip': config.server_ip, 'port': config.headwaiter_port},
     'sg4.trusted.msntv.msn.com.': {'ip': config.server_ip, 'port': config.sg_port},
@@ -60,7 +57,6 @@ class RedirectResolver(BaseResolver):
 
     def forward_request(self, request):
         try:
-<<<<<<< HEAD
             # Create a DNS query for the requested domain
             query = DNSRecord.question(str(request.q.qname), QTYPE.A)
             
@@ -80,16 +76,6 @@ class RedirectResolver(BaseResolver):
                 if isinstance(answer.rdata, A):
                     # Add the answer to the reply
                     continue  # Already in correct format
-=======
-            query = DNSRecord.question(str(request.q.qname), QTYPE.A)
-            response = query.send(config.upstream_dns, 53)  # UDP port 53
-            reply = DNSRecord.parse(response)
-            reply.header.id = request.header.id
-            reply.header.rcode = 0
-            for answer in reply.rr:
-                if isinstance(answer.rdata, A):
-                    continue 
->>>>>>> c8c84c961c226e654e23c3b86c7fe714c39c4d62
                 else:
                     logger.warning(f"Unexpected record type for {reply.q.qname}: {answer.rdata}")
 
@@ -100,7 +86,6 @@ class RedirectResolver(BaseResolver):
             reply = request.reply()
             reply.header.rcode = 3  # NXDOMAIN
             return reply
-<<<<<<< HEAD
 
 if __name__ == '__main__':
     resolver = RedirectResolver()
@@ -111,5 +96,3 @@ if __name__ == '__main__':
     # Keep the server running
     while True:
         pass
-=======
->>>>>>> c8c84c961c226e654e23c3b86c7fe714c39c4d62
