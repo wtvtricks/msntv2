@@ -1,0 +1,51 @@
+<script>
+    // Function to append debug information to the document
+    function outputDebug(message) {
+        document.write(message + "<br>");
+    }
+
+    try {
+        outputDebug("Initializing TVShell object...");
+        var TVShell = new ActiveXObject("MSNTV.TVShell");
+
+        outputDebug("TVShell object created successfully.");
+
+        // Attempt to retrieve the main panel
+        var mainPanel = TVShell.PanelManager ? TVShell.PanelManager.Item("main") : null;
+        outputDebug("TVShell.PanelManager: " + (TVShell.PanelManager ? "Exists" : "Does not exist"));
+        outputDebug("Main panel: " + (mainPanel ? "Success" : "Failed"));
+
+        // Check if ActiveServiceList exists and retrieve the login item
+        var activeServiceList = TVShell.ActiveServiceList ? TVShell.ActiveServiceList.Item("connection::login") : null;
+        outputDebug("TVShell.ActiveServiceList: " + (TVShell.ActiveServiceList ? "Exists" : "Does not exist"));
+        outputDebug("Login Item: " + (activeServiceList ? "Exists" : "Failed to retrieve"));
+
+        // If login item exists, attempt to update the URL
+        if (activeServiceList) {
+            outputDebug("Attempting to set the URL to: http://sg4.trusted.msntv.msn.com/connection/boxcheck.html");
+
+            try {
+                // Attempt to set the URL property
+                activeServiceList.URL = "http://sg4.trusted.msntv.msn.com/connection/boxcheck.html";
+                outputDebug("Login URL successfully updated to: " + activeServiceList.URL);
+            } catch (e) {
+                outputDebug("Failed to set the URL: " + e.message);
+            }
+        } else {
+            outputDebug("ActiveServiceList is null or undefined. Unable to set the URL.");
+        }
+
+        outputDebug("Configuration updated, redirecting to the last page...");
+
+        // Wait for 2.5 seconds before going back 3 pages in history
+        setTimeout(function() {
+            outputDebug("Going back 3 pages in history...");
+            history.go(-3); // Go back 3 pages in history
+        }, 2500);
+
+    } catch (e) {
+        // Output a generic error message
+        outputDebug("Error occurred: " + e.message);
+        outputDebug("Unable to retrieve detailed error stack.");
+    }
+</script>
