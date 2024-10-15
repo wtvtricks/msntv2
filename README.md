@@ -1,5 +1,5 @@
-### MSN TV 2 server (Rewritten)
-I'm back at it. After 3 months of doing nothing here is the new and approved server!
+### UPDATE:
+I'm going to recreate this server because it sucks. DO NOT USE THIS REPO
 
 #### How to use (linux):
 You need the following:
