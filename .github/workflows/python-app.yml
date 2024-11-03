@@ -23,7 +23,6 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       run: |  
-        apt install git
         python3 -m venv .venv
         source .venv/bin/activate
         python -m pip install --upgrade pip
@@ -33,5 +32,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-     git clone https://github.com/wtvtricks/msntv2.git
-        python3 main.py 
+        python3 /msntv2/main.py 
